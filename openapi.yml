@@ -1,0 +1,105 @@
+openapi: 3.0.1
+info:
+  title: Y Combinator API
+  version: ''
+  description: >
+    Welcome to version 0.1 of Y Combinator's public API. This is a very early
+    version of what we hope will be a much richer offering in the future.
+
+    If you're using this API, please [let us
+    know](mailto:software@ycombinator.com) and we will add you to an
+    announcement mailing list for future updates.
+paths:
+  /companies:
+    get:
+      description: >-
+        Get a list of the public Y Combinator companies in the
+        [Directory](https://www.ycombinator.com/companies).
+      operationId: companyService.getAllCompanies
+      tags:
+        - Company
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllCompanies'
+      summary: Get All Companies
+components:
+  schemas:
+    AllCompanies:
+      type: object
+      properties:
+        companies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Company'
+      required:
+        - companies
+    Company:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        website:
+          type: string
+        smallLogoUrl:
+          type: string
+        oneLiner:
+          type: string
+        longDescription:
+          type: string
+        teamSize:
+          type: integer
+        url:
+          type: string
+        batch:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+        industries:
+          type: array
+          items:
+            type: string
+        regions:
+          type: array
+          items:
+            type: string
+        locations:
+          type: array
+          items:
+            type: string
+        badges:
+          type: array
+          items: {}
+      required:
+        - id
+        - name
+        - slug
+        - website
+        - smallLogoUrl
+        - oneLiner
+        - longDescription
+        - teamSize
+        - url
+        - batch
+        - tags
+        - status
+        - industries
+        - regions
+        - locations
+        - badges
+  securitySchemes: {}
+servers:
+  - url: https://api.ycombinator.com/v0.1
+    description: Production
