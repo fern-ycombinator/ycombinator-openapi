@@ -26,6 +26,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AllCompanies'
+        '429':
+          description: ''
       summary: Get All Companies
 components:
   schemas:
@@ -81,7 +83,8 @@ components:
             type: string
         badges:
           type: array
-          items: {}
+          items:
+            type: string
       required:
         - id
         - name
