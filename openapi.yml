@@ -18,7 +18,91 @@ paths:
       operationId: companyService.getAllCompanies
       tags:
         - Company
-      parameters: []
+      parameters:
+        - name: page
+          in: query
+          description: You can page through responses with a page parameter
+          required: false
+          schema:
+            type: integer
+        - name: q
+          in: query
+          description: To search YC companies, you can pass in a general search query.
+          required: false
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: Fern
+        - name: batch
+          in: query
+          description: The batch the company participated in
+          required: false
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: W23
+        - name: status
+          in: query
+          description: The status of the company
+          required: false
+          schema:
+            type: string
+        - name: industry
+          in: query
+          description: The industry of the company
+          required: false
+          schema:
+            type: string
+        - name: region
+          in: query
+          description: The region of the company
+          required: false
+          schema:
+            type: string
+        - name: tags
+          in: query
+          description: The tags self-selected by the company
+          required: false
+          schema:
+            type: string
+        - name: isHiring
+          in: query
+          description: Whether or not the company is actively hiring
+          required: false
+          schema:
+            type: boolean
+        - name: nonprofit
+          in: query
+          description: Whether or not the company is a non-profit
+          required: false
+          schema:
+            type: boolean
+        - name: highlight_black
+          in: query
+          description: >-
+            Whether or not the company has self-selected as having a black
+            founder
+          required: false
+          schema:
+            type: boolean
+        - name: highlight_latinx
+          in: query
+          description: >-
+            Whether or not the company has self-selected as having a latinx
+            founder
+          required: false
+          schema:
+            type: boolean
+        - name: highlight_women
+          in: query
+          description: >-
+            Whether or not the company has self-selected as having a female
+            founder
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: ''
@@ -26,6 +110,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AllCompanies'
+              examples:
+                Example1:
+                  value:
+                    companies:
+                      - id: 28103
+                        name: Fern
+                        slug: fern
+                        website: https://www.buildwithfern.com
+                        smallLogoUrl: >-
+                          https://bookface-images.s3.amazonaws.com/small_logos/884fb2f50da3c4151657d7b8e82ec485436cc6a6.png
+                        oneLiner: Stop writing tedious boilerplate. Start using Fern.
+                        longDescription: "Our team has spent a lot of time doing repetitive, boring tasks when writing APIs.\r\n\r\nWe would write the types and networking on the backend and then do it all again in TypeScript on the frontend. We’d do it again when writing client libraries, and a fourth time when updating our documentation and Postman collection.\r\n\r\nWriting the same code again and again and keeping it all in sync is time-consuming, error-prone, and work that no engineering team wants to do.\r\n\r\nFern is automation for your API. Define your API once and click generate. Out of the box, you’ll get server code, clients, and a Postman collection."
+                        teamSize: 3
+                        url: https://www.ycombinator.com/companies/fern
+                        batch: W23
+                        tags:
+                          - API
+                          - B2B
+                          - SaaS
+                          - Open Source
+                          - Developer Tools
+                        status: Active
+                        industries:
+                          - B2B Software and Services
+                          - Engineering, Product and Design
+                        regions:
+                          - United States of America
+                          - America / Canada
+                        locations:
+                          - San Francisco, CA, USA
+                          - Seattle, WA, USA
+                        badges: []
+                    page: 0
+                    totalPages: 1
         '429':
           description: ''
       summary: Get All Companies
@@ -38,8 +156,16 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Company'
+        page:
+          type: integer
+          example: 0
+        totalPages:
+          type: integer
+          example: 1
       required:
         - companies
+        - page
+        - totalPages
     Company:
       type: object
       properties:
@@ -102,6 +228,13 @@ components:
         - regions
         - locations
         - badges
+    Status:
+      type: string
+      enum:
+        - Active
+        - Public
+        - Acquired
+        - Inactive
   securitySchemes: {}
 servers:
   - url: https://api.ycombinator.com/v0.1
